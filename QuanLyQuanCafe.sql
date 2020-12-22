@@ -1,4 +1,4 @@
-﻿Use master
+Use master
 Go
 
 Create database QuanLyQuanCafe
@@ -99,14 +99,14 @@ GO
 --Nhập dữ liệu cho sản phẩm
 INSERT INTO dbo.SanPham(TenSanPham, idLoai,DonVi, Gia,HinhAnh )
 VALUES  
-( N'Cá chép om dưa',1,N'Đĩa',88888,'Cachepomdua.jpg'),
-( N'Cá diêu hồng hai món',1,N'Đĩa',99999,'Cadieuhonghaimon.jpg'),
-( N'Bò xiên nướng',2,N'Xiên',100000,'Boxiennuong.jpg'),
-( N'Bò lúc lắc khoai tây',2,N'Đĩa',111111,'Boluclackhoaitay.jpg'),
-( N'Chân giò hun khói',3,N'Phần',87000,'Changiohunkhoi.jpg'),
-( N'Chân giò hầm nấm',3,N'Phần',96000,'Changiohamnam.jpg'),
-( N'Sài gòn xanh',4,N'Chai',15000,'Saigonxanh.jpg'),
-( N'Tiger nâu',4,N'Chai',18000,'Tigernau.jpg')
+( N'Bánh mì thịt',1,N'Đĩa',15000,'banhmithit.jpg'),
+( N'Bánh mì trứng',1,N'Đĩa',15000,'banhmitrung.jpg'),
+( N'Bò cụng',2,N'Xiên',100000,'bocung.jpg'),
+( N'Cafe sữa',2,N'Đĩa',111111,'cafe.jpg'),
+( N'Cafe đen',3,N'Phần',87000,'capheden.jpg'),
+( N'Hủ tiếu',3,N'Phần',96000,'Hutieu.jpg'),
+( N'Sting',4,N'Chai',15000,'Sting.jpg'),
+( N'Pepsi',4,N'Chai',18000,'pepsi.jpg')
 GO
 
 --Nhập kho
@@ -219,14 +219,14 @@ VALUES
 	(N'Giảm 10% Món cá chép om dưa',10,0,NULL,NULL,1,2,N'Không hoạt động')
 GO
 
--- PROCEDURE
+-- PROCEDURE hiển thị
 create PROC USP_GetDsKho
 AS
 BEGIN
 	SELECT  idHang,TenHang,SL,DVT,Gia FROM Kho 
 END
 GO
-
+--Thêm Thông tin tài khoản
 create PROC themThongTinTk
 @tenDangNhap varchar(100), @hoTen nvarchar(100), @diaChi nvarchar(100), @cMND VARCHAR(100), @sDT VARCHAR(100), @tuoi INT, @gioiTinh nvarchar(100)
 AS
@@ -236,7 +236,7 @@ BEGIN
 	( @hoTen,  @sDT, @diaChi, @cMND, @tuoi, @gioiTinh,  @tenDangNhap )
 END
 GO
-
+--Thêm kho
 CREATE proc dbo.USP_InsertDrink1
 @TenSanPham nvarchar(100),@DonVi nvarchar(100), @Gia float, @idLoai int
 as  
@@ -247,7 +247,7 @@ begin
 	(@TenSanPham, @DonVi,@Gia, @idLoai )
 end
 GO
-
+--Thêm sản phẩm
 create proc dbo.USP_InsertDrink
 @TenSanPham nvarchar(100),@DonVi nvarchar(100), @Gia float, @idLoai int, @tenAnh varchar(100)
 as  
@@ -259,6 +259,7 @@ begin
 end
 GO
 
+--Thêm kho
 create PROC themKho
 @tenSP nvarchar(100),@SL int,@gia float,@DVT nvarchar(100)
 AS
@@ -267,7 +268,7 @@ BEGIN
 	VALUES(@tenSP, @SL,@gia,@DVT )
 END
 GO
-
+--Thêm loại sản phẩm
 CREATE PROC themLoaiSanPham
 @tenLoaiSanPham nvarchar(100),@danhMuc nvarchar(100)
 AS
@@ -276,7 +277,7 @@ BEGIN
 	VALUES(@tenLoaiSanPham, @danhMuc )
 END
 GO
-
+--Thêm bàn
 CREATE PROC themBan
 @tenBan nvarchar(100)
 AS
@@ -285,7 +286,7 @@ BEGIN
 	VALUES(@tenBan,N'Trống')
 END
 GO
-
+--xóa bàn
 CREATE PROC XoaBan
 @tenBan NVARCHAR(100)
 as
@@ -293,7 +294,7 @@ BEGIN
 	DELETE dbo.Ban WHERE TenBan = 11
 END
 GO
-
+--Xóa sản phẩm
 CREATE PROC XoaSp
 @TenSanPham NVARCHAR(100)
 as
@@ -301,35 +302,35 @@ BEGIN
 	DELETE dbo.SanPham WHERE TenSanPham = @TenSanPham
 END
 GO
-
+--Kiểm tra trạng thái thẻ khuyến mãi
 create PROC USP_GetDSKM
 AS
 BEGIN
 	SELECT * FROM KhuyenMai Where TrangThai = N'Đang diễn ra'
 END
 GO
-
+-- hiện mã gì đó ở dưới
 create PROC USP_GetDSKMAll
 AS
 BEGIN
 	SELECT * FROM KhuyenMai 
 END
 GO
-
+--Hiện bàn
 CREATE PROC USP_GetTableList
 AS
 BEGIN
 	SELECT * FROM Ban
 END
 GO
-
+--Hiện sản phẩm
 CREATE PROC USP_GetListFood
 AS
 BEGIN
 	SELECT * FROM SanPham
 END
 GO
-
+--Hiện danh mục
 CREATE PROC USP_GetListMonAn
 AS
 BEGIN
@@ -338,7 +339,7 @@ BEGIN
 	WHERE a.idLoai = b.id AND b.DanhMuc = N'Món ăn'
 END
 GO
-
+--Hiện danh mục
 CREATE PROC USP_GetListDoUong
 AS
 BEGIN
@@ -347,7 +348,7 @@ BEGIN
 	WHERE a.idLoai = b.id AND b.DanhMuc = N'Đồ uống'
 END
 GO
-
+--Hiện danh mục
 CREATE PROC USP_GetListKhac
 AS
 BEGIN
@@ -357,7 +358,7 @@ BEGIN
 END
 GO
 
-
+--Hiện
 Create PROC USP_GetHoaDon
 @idBan INT
 AS
@@ -367,7 +368,7 @@ BEGIN
 	WHERE bi.idHoaDon = b.id AND bi.idSanPham = f.id AND b.TrangThai=N'Chưa thanh toán' AND b.idBan =@idBan
 END
 GO
-
+--Hiện
 CREATE PROC dbo.USP_InBill
 @idBan INT
 AS
@@ -377,7 +378,7 @@ BEGIN
 	WHERE bi.idHoaDon = b.id AND bi.idSanPham = f.id AND b.TrangThai=N'Chưa thanh toán' AND b.idBan = @idBan
 END
 GO
-
+--Hiện
 Create PROC dbo.USP_InBill1
 @idHoaDon INT
 AS
@@ -389,7 +390,7 @@ END
 GO
 
 
-
+--Xóa tài khoản
 CREATE PROC XoaTK
 @tenDn VARCHAR(100)
 AS
@@ -398,7 +399,7 @@ BEGIN
 	DELETE dbo.TaiKhoan WHERE TenDangNhap = @tenDn 
 END
 GO
-
+--Hiện
 CREATE PROC USP_DangNhap
 @TenDangNhap NVARCHAR(100), @MatKhau NVARCHAR(100)
 AS
@@ -406,7 +407,7 @@ BEGIN
 	SELECT * FROM dbo.TaiKhoan WHERE TenDangNhap=@TenDangNhap AND MatKhau =@MatKhau 
 END
 GO
-
+--Hiện
 CREATE PROC themTaiKhoan
 @ten varchar(100), @matKhau nvarchar(100), @loai nvarchar(10)
 AS
@@ -415,7 +416,7 @@ BEGIN
 	VALUES (@ten, @matKhau, @loai)
 END
 GO
-
+--Thêm
 create PROC USP_InsertBill
 @idBan INT,
 @TongCong FLOAT
@@ -425,7 +426,7 @@ BEGIN
 	VALUES ( GETDATE(), null, @idBan, @TongCong , N'Chưa thanh toán') 
 END
 GO
-
+--Sửa
 Create PROC USP_UpdateSL
 @SoLuong INT,
 @idHoaDon INT,
@@ -435,7 +436,7 @@ BEGIN
 	UPDATE dbo.ThongTinHoaDon SET SoLuong = @SoLuong WHERE  idHoaDon = @idHoaDon AND idSanPham = @idSanPham
 END
 GO
-
+--Sửa Bill sản phẩm
 CREATE PROC USP_InsertBillInfo
 @idHoaDon INT,@idSanPham INT , @SoLuong INT
 AS
@@ -470,7 +471,8 @@ BEGIN
 		END
 END
 GO
-
+--Loại bỏ dấu tiếng việt _ hình như cho ảnh 
+--https://quyetdo289.wordpress.com/2012/11/25/loai-bo-dau-tieng-viet-trong-t-sql/
 CREATE FUNCTION [dbo].[fuConvertToUnsign1]
 (
  @strInput NVARCHAR(4000)
@@ -520,7 +522,7 @@ BEGIN
  RETURN @strInput
 END
 GO
-
+--chưa sử dụng
 Create proc USP_InsertVoucher
 @id varchar(100), @TenVoucher Nvarchar(100), @giamGia INT, @giamTien Float, @hanSuDung Date
 as
@@ -529,7 +531,7 @@ BEGIN
 	VALUES(@id,@TenVoucher,@giamGia,@giamTien,@hanSuDung,N'Chưa sử dụng')
 END 
 GO
-
+-- trạng thái Voucher thêm mã khuyến mãi
 create proc dbo.USP_InsertDiscount
 @tenKM NVARCHAR(200) , @giamGia INT , @giamTien FLOAT, @toiDa FLOAT, @dieuKien FLOAT,@idLoaiKM INT
 as  
@@ -540,7 +542,7 @@ begin
 	(@tenKM , @giamGia , @giamTien , @toiDa , @dieuKien,@idLoaiKM,N'Đang diễn ra')
 end
 GO
-
+-- trạng thái Voucher Update mã khuyến mãi
 create proc dbo.USP_UpdateDiscount
 @tenKM NVARCHAR(200) , @giamGia INT , @giamTien FLOAT, @toiDa FLOAT, @dieuKien FLOAT,@idLoaiKM INT,@idKM INT
 as  
@@ -550,7 +552,7 @@ begin
 	WHERE id = @idKM
 end
 GO
-
+--Xóa sp
 Create Proc USP_DeleteSP
 @idHoaDon INT, @idSanPham INT
 AS
@@ -558,7 +560,7 @@ BEGIN
 	DELETE dbo.ThongTinHoaDon Where idHoaDon = @idHoaDon AND idSanPham = @idSanPham
 END
 GO
-
+--Chuyên môn 
 Create Proc ChuyenNMon
 @idHoaDon INT,@idSanPham INT,@idTableTo INT,@idTableFrom INT
 AS
@@ -591,7 +593,7 @@ BEGIN
 	DROP table dbo.TEMP
 END
 GO
-
+--Bảng thống kê
 Create Proc USP_BCTK
 @fromDate DateTime,@toDate DateTime
 as
