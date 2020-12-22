@@ -99,14 +99,14 @@ GO
 --Nhập dữ liệu cho sản phẩm
 INSERT INTO dbo.SanPham(TenSanPham, idLoai,DonVi, Gia,HinhAnh )
 VALUES  
-( N'Cá chép om dưa',1,N'Đĩa',88888,'Cachepomdua.jpg'),
-( N'Cá diêu hồng hai món',1,N'Đĩa',99999,'Cadieuhonghaimon.jpg'),
-( N'Bò xiên nướng',2,N'Xiên',100000,'Boxiennuong.jpg'),
-( N'Bò lúc lắc khoai tây',2,N'Đĩa',111111,'Boluclackhoaitay.jpg'),
-( N'Chân giò hun khói',3,N'Phần',87000,'Changiohunkhoi.jpg'),
-( N'Chân giò hầm nấm',3,N'Phần',96000,'Changiohamnam.jpg'),
-( N'Sài gòn xanh',4,N'Chai',15000,'Saigonxanh.jpg'),
-( N'Tiger nâu',4,N'Chai',18000,'Tigernau.jpg')
+( N'Bánh mì thịt',1,N'Đĩa',15000,'banhmithit.jpg'),
+( N'Bánh mì trứng',1,N'Đĩa',15000,'banhmitrung.jpg'),
+( N'Bò cụng',2,N'Xiên',100000,'bocung.jpg'),
+( N'Cafe sữa',2,N'Đĩa',111111,'cafe.jpg'),
+( N'Cafe đen',3,N'Phần',87000,'capheden.jpg'),
+( N'Hủ tiếu',3,N'Phần',96000,'Hutieu.jpg'),
+( N'Sting',4,N'Chai',15000,'Sting.jpg'),
+( N'Pepsi',4,N'Chai',18000,'pepsi.jpg')
 GO
 
 --Nhập kho
@@ -248,6 +248,7 @@ begin
 end
 GO
 --Thêm sản phẩm
+create proc dbo.USP_InsertDrink
 @TenSanPham nvarchar(100),@DonVi nvarchar(100), @Gia float, @idLoai int, @tenAnh varchar(100)
 as  
 begin
@@ -257,6 +258,7 @@ begin
 	(@TenSanPham,@DonVi, @Gia, @idLoai,@tenAnh )
 end
 GO
+
 --Thêm kho
 create PROC themKho
 @tenSP nvarchar(100),@SL int,@gia float,@DVT nvarchar(100)
